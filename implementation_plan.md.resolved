@@ -1,0 +1,63 @@
+# Cashier-less Billing System Architecture
+
+This app implements a smart billing system where products taken or returned are automatically added or subtracted from a customer's bill using computer vision.
+
+## User Review Required
+
+> [!IMPORTANT]
+> Please clarify the camera setup for the application:
+> 
+> 1. **Option A (Self-Checkout App)**: The customer holds their mobile phone, and the app uses the phone camera to detect products being picked up or put back.
+> 2. **Option B (Smart Shelf like Amazon Go)**: There are fixed cameras on the shelves tracking the products, and the app is just a dashboard for the customer to view their bill in real-time.
+> 
+> The proposed architecture below assumes **Option A** (a mobile-friendly Web App that accesses the device camera). Please confirm if this is what you want!
+
+## Proposed Changes
+
+We will build the system in two parts: a React/Vite Frontend and a Python/FastAPI Backend.
+
+### Frontend App (Vite + React)
+- **Features**:
+  - Login/Customer ID Entry surface.
+  - Camera access page (`getUserMedia` API) that streams frames to the backend or processes them via a lightweight in-browser model.
+  - Cart dashboard showing the current bill, updating in real-time as items are added or removed.
+- **Tech Stack**: React, Vanilla CSS for modern and sleek styling.
+
+#### [NEW] `frontend/src/App.jsx`
+Main layout and routing between Login, Camera view, and Cart view.
+
+#### [NEW] `frontend/src/CameraView.jsx`
+Handles WebRTC or frame streaming to the backend for computer vision processing.
+
+#### [NEW] `frontend/src/Cart.jsx`
+Displays the real-time bill and current cart items.
+
+---
+
+### Backend System (FastAPI + OpenCV)
+- **Features**:
+  - Exposes REST/WebSocket API for the frontend app.
+  - Handles the computer vision logic (mocked or simple OpenCV initially) to detect "pick up" vs "put down" actions.
+  - Manages the state of the cart for each `customer_id`.
+- **Tech Stack**: Python, FastAPI, WebSockets (for real-time cart updates), OpenCV.
+
+#### [NEW] `backend/main.py`
+Endpoints for customer sessions and WebSocket connection for camera frame processing.
+
+#### [NEW] `backend/vision.py`
+Logic to process frames and determine if a product has been added or removed from the view.
+
+#### [NEW] `backend/cart.py`
+In-memory or simple database logic for tracking the bill for each customer ID.
+
+## Verification Plan
+
+### Automated Tests
+- Test backend endpoints for adding/removing items from a cart explicitly via unit tests.
+- Test frontend components rendering correctly with different cart states.
+
+### Manual Verification
+- We will run the frontend and backend locally.
+- You can open the web app, enter a `customer_id`, and allow camera access.
+- We will simulate "picking up" an item (e.g., showing a specific QR code or object to the camera) and verify it appears on your bill.
+- We will simulate "putting back" that item and verify it is removed from your bill.

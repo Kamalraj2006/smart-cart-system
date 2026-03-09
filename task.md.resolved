@@ -1,0 +1,21 @@
+# Cashier-less Billing System Tasks
+
+- [ ] **Planning phase**
+  - [/] Define application architecture
+  - [ ] Gather user requirements and constraints
+
+- [ ] **Backend & Computer Vision Setup**
+  - [ ] Initialize Python environment (FastAPI)
+  - [ ] Implement camera stream receiving / processing
+  - [ ] Implement mock object detection logic (pick up / put down)
+  - [ ] Implement billing logic and customer tracking
+
+- [ ] **App Frontend Setup**
+  - [ ] Initialize Web App (React/Vite)
+  - [ ] Implement customer ID input / authentication
+  - [ ] Implement camera access for scanning products
+  - [ ] Develop Customer dashboard and real-time bill view
+
+- [ ] **Integration and Testing**
+  - [ ] Connect Frontend with Backend API
+  - [ ] Verify cart logic (Addition and Subtraction)
